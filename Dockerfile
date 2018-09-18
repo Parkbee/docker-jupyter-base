@@ -7,7 +7,7 @@ FROM jupyter/scipy-notebook:137a295ff71b
 RUN pip install --upgrade pip
 
 # Copy additional requirements
-COPY requirements.txt /requirements.txt
+COPY requirements.txt .
 
 # Install additional requirements
-RUN pip install --requirement /requirements.txt
+RUN while read requirement; do conda install --yes $requirement || pip install $requirement; done < requirements.txt
